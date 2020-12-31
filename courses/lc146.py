@@ -36,3 +36,7 @@ class LRUCache:
       self.insert(self.cache[key])
       return self.cache[key].val
     return -1
+
+if __name__ == "__main__":
+  lru = new Node(5);
+  
