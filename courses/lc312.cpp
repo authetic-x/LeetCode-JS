@@ -109,6 +109,38 @@ int maxCoins(vector<int>& iNums) {
   return dp[0][n-1];
 }
 
+// 5. Jump game
+bool canJump(vector<int>& nums) {
+  int lastPos = nums.size() - 1;
+  for (int i = nums.size() - 1; i >= 0; i -- ) {
+    if (nums[i] + i >= lastPos) {
+      lastPos = i;
+    }
+  }
+  return lastPos == 0;
+}
+
+// 6. Jump gameⅡ
+int jump(vector<int>& nums) {
+  int n = nums.size();
+  int i = 0, cnt = 0;
+  while (i < n-1) {
+    int j = i + nums[i];
+    int maxCover = 0, nextPos = j;
+    while (j > i && j < n-1) {
+      if (maxCover < j + nums[j]) {
+        maxCover = j + nums[j];
+        nextPos = j;
+      }
+      j--;
+    }
+    if (nextPos == i) break;
+    i = nextPos;
+    cnt++;
+  }
+  return cnt;
+}
+
 int main() {
   // Test case 1:
   int res1 = noAdd_add(5, 7);
@@ -157,5 +189,35 @@ int main() {
   printf("Input: [3, 1, 5, 8]\n");
   printf("Expected: 167\n");
   printf("Output: %d\n", res4);
+
+  // Test case 5: Jump game
+  vector<int> iNums;
+  iNums.push_back(2);
+  iNums.push_back(3);
+  iNums.push_back(1);
+  iNums.push_back(1);
+  iNums.push_back(4);
+  // expect: true 
+  // [2, 3, 1, 1, 4]
+  int res4 = maxCoins(iNums);
+  printf("##################### Test Case5 #####################\n");
+  printf("Input: [2, 3, 1, 1, 4]\n");
+  printf("Expected: 167\n");
+  printf("Output: %d\n", res5);
+
+  // Test case 6: Jump gameⅡ
+  vector<int> iNums;
+  iNums.push_back(2);
+  iNums.push_back(3);
+  iNums.push_back(1);
+  iNums.push_back(1);
+  iNums.push_back(4);
+  // expect: 2 
+  // [2, 3, 1, 1, 4] 从0跳到1, 再从1跳到终点4
+  int res6 = jump(iNums);
+  printf("##################### Test Case6 #####################\n");
+  printf("Input: [2, 3, 1, 1, 4]\n");
+  printf("Expected: 2\n");
+  printf("Output: %d\n", res6);
   return 0;
 }
