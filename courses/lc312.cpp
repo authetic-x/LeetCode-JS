@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include <vector>
 #include <stack>
 #include <map>
@@ -191,30 +192,30 @@ int main() {
   printf("Output: %d\n", res4);
 
   // Test case 5: Jump game
-  vector<int> iNums;
-  iNums.push_back(2);
-  iNums.push_back(3);
-  iNums.push_back(1);
-  iNums.push_back(1);
-  iNums.push_back(4);
+  vector<int> iNums1;
+  iNums1.push_back(2);
+  iNums1.push_back(3);
+  iNums1.push_back(1);
+  iNums1.push_back(1);
+  iNums1.push_back(4);
   // expect: true 
   // [2, 3, 1, 1, 4]
-  int res4 = maxCoins(iNums);
+  string res5 = canJump(iNums1) ? "true" : "false";
   printf("##################### Test Case5 #####################\n");
   printf("Input: [2, 3, 1, 1, 4]\n");
-  printf("Expected: 167\n");
-  printf("Output: %d\n", res5);
+  printf("Expected: true\n");
+  cout << "Output: " << res5 << endl;
 
   // Test case 6: Jump gameⅡ
-  vector<int> iNums;
-  iNums.push_back(2);
-  iNums.push_back(3);
-  iNums.push_back(1);
-  iNums.push_back(1);
-  iNums.push_back(4);
+  vector<int> iNums2;
+  iNums2.push_back(2);
+  iNums2.push_back(3);
+  iNums2.push_back(1);
+  iNums2.push_back(1);
+  iNums2.push_back(4);
   // expect: 2 
   // [2, 3, 1, 1, 4] 从0跳到1, 再从1跳到终点4
-  int res6 = jump(iNums);
+  int res6 = jump(iNums2);
   printf("##################### Test Case6 #####################\n");
   printf("Input: [2, 3, 1, 1, 4]\n");
   printf("Expected: 2\n");
