@@ -1,28 +1,51 @@
-class Scheduler {
-  constructor({ maxCount }) {
-    this.queue = []
-    this.maxCount = maxCount || 2
-    this.runCount = 0
+class PromiseScheduler {
+  constructor(limit) {
+    this._limit = limit
+    this._running = 0
+    this._queue = []
   }
-
-  add(promiseCreator) {
-    this.queue.push(promiseCreator)
+  push(fn) {
+    this._queue.push(fn)
   }
-
   request() {
-    if (this.runCount === this.maxCount || !this.queue.length) return
-
-    const promiseCreator = this.queue.shift()
-    promiseCreator().then(() => {
-      this.runCount--
-      this.request()
-    })
-    this.runCount++
+    if (this._running < this._limit && this._queue.length) {
+      const promiseFn = this._queue.shift()
+      promiseFn().then(() => {
+        console.log('finished')
+        this._running--
+        this.request()
+      })
+      this._running++
+    }
   }
-
   start() {
-    for (let i = 0; i < this.maxCount; i ++ ) {
+    for (let i = 0; i < this._limit && i < this._queue.length; i ++ ) {
       this.request()
     }
   }
 }
+
+function f1() {
+return new Promise((resolve) => {
+  setTimeout(() => {
+    resolve()
+  }, 2000)
+})
+}
+
+function f2() {
+return new Promise((resolve) => {
+  setTimeout(() => {
+    resolve()
+  }, 2000)
+})
+}
+
+const scheduler = new PromiseScheduler(1)
+
+scheduler.push(f1)
+scheduler.push(f2)
+
+scheduler.start()
+
+

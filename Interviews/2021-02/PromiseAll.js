@@ -22,6 +22,25 @@ function PromiseAll(promises) {
   })
 }
 
+Promise.prototype.promiseAll = function(promises) {
+  if (!Array.isArray(Array.from(promises))) {
+    throw new Error('promises must be an array or iterator object')
+  }
+
+  promises = Array.from(promises)
+  return new Promise((resolve, reject) => {
+    const resovleVals = []
+    for (const promise of promises) {
+      Promise.resolve(promise).then(v => {
+        resovleVals.push(v)
+        if (resovleVals.length === promises.length) resolve(resovleVals)        
+      }).catch(e => {
+        reject(e)
+      })
+    }
+  })
+}
+
 const p1 = Promise.resolve(1)
 const p2 = Promise.resolve(2)
 const p3 = new Promise((resolve) => {
